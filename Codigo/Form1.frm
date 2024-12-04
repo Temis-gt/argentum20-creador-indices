@@ -729,40 +729,71 @@ Private Sub Command1_Click()
 
         End If
 
-730     If FileExist(App.Path & "\..\Recursos\init\LocalMsg.dat", vbNormal) Then
-
+        If FileExist(App.Path & "\..\Recursos\init\SP_LocalMsg.dat", vbNormal) Then
             Dim MsgFile As String
-
-732         MsgFile = App.Path & "\..\Recursos\init\LocalMsg.dat"
-
+            Dim NumLocaleSP_Msg As Long
+            Dim arrLocale_SP_SMG() As String
+            Dim SP_MSG As Integer
+            Dim EN_MSG As Integer
+             
+            MsgFile = App.Path & "\..\Recursos\init\SP_LocalMsg.dat"
             Dim Msgsss As New clsIniReader
-
-734         Call Msgsss.Initialize(MsgFile)
-736         numnpcs = Val(Msgsss.GetValue("INIT", "NumLocaleMsg"))
-738         Label3.Caption = "0/" & CStr(numnpcs)
-740         ReDim arrLocale_SMG(1 To numnpcs) As String
-
-742         For Npc = 1 To numnpcs
-744             DoEvents
-746             arrLocale_SMG(Npc) = Msgsss.GetValue("msg", "Msg" & Npc)
-748             Label3.ForeColor = vbRed
-750             Label3.Caption = "Leyendo NPCs: " & Npc & "/" & numnpcs
-752         Next Npc
-
-754         Npc = 1
-756         Call Manager.ChangeValue("INIT", "NumLocaleMsg", numnpcs)
-
-758         For Npc = 1 To numnpcs
-760             DoEvents
-762             Call Manager.ChangeValue("Msg", "Msg" & Npc, arrLocale_SMG(Npc))
-764             Label3.Caption = "Grabando NPCs: " & Npc & "/" & numnpcs
-766             Label3.ForeColor = &HC0C0&
-768         Next Npc
-
+        
+            Call Msgsss.Initialize(MsgFile)
+            NumLocaleSP_Msg = Val(Msgsss.GetValue("INIT", "NumLocaleSP_Msg"))
+            Label3.Caption = "0/" & CStr(NumLocaleSP_Msg)
+            ReDim arrLocale_SP_SMG(1 To NumLocaleSP_Msg) As String
+        
+            ' Leer mensajes en español
+            For SP_MSG = 1 To NumLocaleSP_Msg
+                DoEvents
+                arrLocale_SP_SMG(SP_MSG) = Msgsss.GetValue("SP_MSG", "Msg" & SP_MSG)
+                Label3.ForeColor = vbRed
+                Label3.Caption = "Leyendo MSG ESP: " & SP_MSG & "/" & NumLocaleSP_Msg
+            Next SP_MSG
+        
+            ' Escribir mensajes en español
+            Call Manager.ChangeValue("INIT", "NumLocaleSP_Msg", NumLocaleSP_Msg)
+            For SP_MSG = 1 To NumLocaleSP_Msg
+                DoEvents
+                Call Manager.ChangeValue("SP_Msg", "Msg" & SP_MSG, arrLocale_SP_SMG(SP_MSG))
+                Label3.Caption = "Grabando MSG ESP: " & SP_MSG & "/" & NumLocaleSP_Msg
+                Label3.ForeColor = &HC0C0&
+            Next SP_MSG
         Else
-770         MsgBox "Falta el archivo LocalMsg.dat dentro de la carpeta dats."
-
+            MsgBox "Falta el archivo SP_LocalMsg.dat dentro de la carpeta dats."
         End If
+        
+        If FileExist(App.Path & "\..\Recursos\init\EN_LocalMsg.dat", vbNormal) Then
+            Dim NumLocaleEN_Msg As Long
+            Dim arrLocale_EN_SMG() As String
+        
+            MsgFile = App.Path & "\..\Recursos\init\EN_LocalMsg.dat"
+            Call Msgsss.Initialize(MsgFile)
+            NumLocaleEN_Msg = Val(Msgsss.GetValue("INIT", "NumLocaleEN_Msg"))
+            Label3.Caption = "0/" & CStr(NumLocaleEN_Msg)
+            ReDim arrLocale_EN_SMG(1 To NumLocaleEN_Msg) As String
+        
+            ' Leer mensajes en inglés
+            For EN_MSG = 1 To NumLocaleEN_Msg
+                DoEvents
+                arrLocale_EN_SMG(EN_MSG) = Msgsss.GetValue("EN_MSG", "Msg" & EN_MSG)
+                Label3.ForeColor = vbRed
+                Label3.Caption = "Leyendo MSG EN: " & EN_MSG & "/" & NumLocaleEN_Msg
+            Next EN_MSG
+        
+            ' Escribir mensajes en inglés
+            Call Manager.ChangeValue("INIT", "NumLocaleEN_Msg", NumLocaleEN_Msg)
+            For EN_MSG = 1 To NumLocaleEN_Msg
+                DoEvents
+                Call Manager.ChangeValue("EN_Msg", "Msg" & EN_MSG, arrLocale_EN_SMG(EN_MSG))
+                Label3.Caption = "Grabando MSG EN: " & EN_MSG & "/" & NumLocaleEN_Msg
+                Label3.ForeColor = &HC0C0&
+            Next EN_MSG
+        Else
+            MsgBox "Falta el archivo EN_LocalMsg.dat dentro de la carpeta dats."
+        End If
+
 
 772     If FileExist(App.Path & "\..\Recursos\init\NameMapa.dat", vbNormal) Then
 
