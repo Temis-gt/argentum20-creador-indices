@@ -783,7 +783,7 @@ Private Sub Command1_Click()
             Next EN_MSG
         
             ' Escribir mensajes en inglés
-            Call Manager.ChangeValue("INIT", "NumLocaleEN_Msg", NumLocaleEN_Msg)
+            Call Manager.ChangeValue("INIT", "NumLocaleMsg", NumLocaleEN_Msg)
             For EN_MSG = 1 To NumLocaleEN_Msg
                 DoEvents
                 Call Manager.ChangeValue("EN_Msg", "Msg" & EN_MSG, arrLocale_EN_SMG(EN_MSG))
