@@ -753,7 +753,7 @@ Private Sub Command1_Click()
             Next SP_MSG
         
             ' Escribir mensajes en español
-            Call Manager.ChangeValue("INIT", "NumLocaleSP_Msg", NumLocaleSP_Msg)
+            'Call Manager.ChangeValue("INIT", "NumLocaleSP_Msg", NumLocaleSP_Msg)
             For SP_MSG = 1 To NumLocaleSP_Msg
                 DoEvents
                 Call Manager.ChangeValue("SP_Msg", "Msg" & SP_MSG, arrLocale_SP_SMG(SP_MSG))
